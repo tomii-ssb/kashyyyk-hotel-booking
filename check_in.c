@@ -8,10 +8,6 @@
 
 party parties_arr[6];
 
-/* [x][0] : booking_id without surname
- * [x][1] : pointer to party in parties_arr */
-int parties_index_arr[6][2];
-
 void generate_booking_id(char *id, const char *sur, int len){
     srand(time(0));
 
@@ -84,7 +80,7 @@ int add_party_to_array(party booked_party){
     return party_index;
 }
 
-int book(int a_num, int c_num, int dob, int ln, char* id, char* brd, char* sur){
+int book(int a_num, int c_num, int dob, int ln, int wake_up, char* id, char* brd, char* sur){
 
     // var
     int total = a_num + c_num; // Total people staying
@@ -144,6 +140,7 @@ int book(int a_num, int c_num, int dob, int ln, char* id, char* brd, char* sur){
     booked_party.c_num = c_num;
     booked_party.brd = *brd;
     booked_party.stay_ln = ln;
+    booked_party.wake_up = wake_up;
 
     // Assign needed_room array values to stayed_rooms 'Party' struct element array
     for(int i=0;i<6;i++){
@@ -155,20 +152,7 @@ int book(int a_num, int c_num, int dob, int ln, char* id, char* brd, char* sur){
         booked_party.booking_id[i] = &id[i];
     }
 
-    // Sort through array holding party array indexes (party_index_arr)
-    for(int i=0;i<6;i++){
-
-        // Check for free index
-        if (parties_index_arr[i][0] == 0){
-
-            // Store party's int ID in array
-            parties_index_arr[i][0] = get_int_id(id, sur);
-
-            /* Add booked_party to parties array (parties_arr), and then add index
-             * to the index array (parties_index_arr) */
-            parties_index_arr[i][1] = add_party_to_array(booked_party);
-        }
-    }
+    add_party_to_array(booked_party);
 
     // Sort through needed_rooms array
     for(int i=0;i<6;i++)
@@ -199,7 +183,8 @@ int check_in (){
     printf("id with sur: %s", booking_id);
     get_int_id(booking_id, usr_surname);
 
-    if(book(adult_num,child_num,dob,ln,booking_id,&brd,usr_surname)) return 1;
+    if(book(adult_num,child_num,dob,ln,wakeup_call,booking_id,&brd,usr_surname)
+            ) return 1;
 
 
     return 0;

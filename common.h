@@ -13,6 +13,7 @@ struct Party
     int c_num;
     char brd;
     int stay_ln;
+    int wake_up;
     int *stayed_rooms[6][2];
 };
 

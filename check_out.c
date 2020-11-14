@@ -1,11 +1,10 @@
+// Written by Ollie
+
 #include <stdio.h>
 #include <string.h>
 #include "common.h"
 
 void checkout(char *party_array[]);
-
-//temporary values
-char bookingID[6][30] = {"barnes1","smith2","james3","johnson4","richardson5","bailey6"};
 
 //board_type = board type of each room &
 //room_num
@@ -27,14 +26,16 @@ void checkout(char *party_array[]){
     printf("enter your booking ID");
     gets(input_bookingID);
     for(i=0;i<6;i++){
-        if(strcmp(input_bookingID,bookingID[parties_arr[i].booking_id]) == 0){
+        if(strcmp(input_bookingID,*parties_arr[i].booking_id) == 0){
             index = i;
+            i = 6;
         }
     }
 
     int len_stay = parties_arr[index].stay_ln;
     int num_adults = parties_arr[index].a_num;
     int num_children = parties_arr[index].c_num;
+    char brd = parties_arr[index].brd;
 
     //calculate the cost of the rooms used
     for(i=0;i<6;i++){
@@ -68,7 +69,7 @@ void checkout(char *party_array[]){
 
 
     //birthday dd mm yyyy
-    int dob_ddmmyyyy = party_array[1][index];
+    int dob_ddmmyyyy = parties_arr[index].dob;
     int dob_year=dob_ddmmyyyy,dob_month=dob_ddmmyyyy,dob_date=dob_ddmmyyyy;
 
     //year
@@ -109,15 +110,15 @@ void checkout(char *party_array[]){
 
 
     //calculate cost of board
-    if(party_array[4][index] == 0){//if board type is full board
+    if(brd = 'f'){//if board type is full board
         board_cost = board_cost + (20*len_stay*num_adults) + (10*len_stay*num_children);
         discount = (10*len_stay*num_children);
     }
-    else if(party_array[4][index] == 1){//if board type is half board
+    if(brd = 'h'){//if board type is half board
         board_cost = board_cost + (15*len_stay*num_adults) + (7.5*len_stay*num_children);
         discount = (7.5*len_stay*num_children);
     }
-    else if(party_array[4][index] == 0){//if board type is full board
+    if(brd == 'b'){//if board type is b&b
         board_cost = board_cost + (5*len_stay*num_adults) + (2.5*len_stay*num_children);
         discount = (2.5*len_stay*num_children);
     }
