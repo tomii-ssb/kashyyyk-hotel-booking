@@ -1,32 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include "common.h"
-/*========================================================================================================
- NOTE TO TOMMY:
- the errors are due to me having removed the temporary global variables that were in my code,
- once you paste this into your code there should be zero errors.
-
- The current errors should only be due to:
- -party_array not being declared
- -bookingID not being declared
- -rooms_arr not being declared
- ========================================================================================================*/
-
- /*** KNOWN BUGS
-
- ***/
-
-//function declarations
-void checkout();
-
-
-
-int main() {
-    checkout();
-    return 0;
-}
-
-
 
 void checkout(){
 
@@ -34,6 +8,7 @@ void checkout(){
     int i,x;
 
     char input_bookingID[50];//stores the booking id that the user inputs
+    int guest_index = 0;
     party guest;
     int q = 0;
 
@@ -46,6 +21,7 @@ void checkout(){
             //compares the id user entered and stored ID's
             if (strcmp(input_bookingID, parties_arr[i].booking_id)) {
                 guest = parties_arr[i];
+                guest_index = i;
                 q++;
             }
         }
@@ -68,32 +44,31 @@ void checkout(){
     }
 
 
-
     //calculate if age is over 65
     //splits current date and date of birth into dd mm yyyy
     //current dd mm yyyy
     int current_date = 0,year,month,date,dob_ddmmyyyy,dob_year, dob_month, dob_date;
     do {
         current_date = 0;
-        dob_ddmmyyyy = party_array[1][index];
+        dob_ddmmyyyy = guest.dob;
         dob_year = dob_ddmmyyyy, dob_month = dob_ddmmyyyy, dob_date = dob_ddmmyyyy;
         do {
-            printf("enter today's date (DDMMYYYY)");
+            printf("Please enter today's date (DDMMYYYY)\n");
             scanf("%d", &current_date);
-            if (current_date < 01012020) {
-                printf("too few characters entered");
-            }
+
+            if (current_date < 01012020) printf("too few characters entered");
+
         } while (current_date < 01012020);
         year = current_date; month=current_date;date=current_date;
         //year
         do {
-            year = year - 10000;
+            year -= 10000;
         } while (year > 9999);
         //month
         do {
-            month = month - 1000000;
+            month -= 1000000;
         } while (month > 999999);
-        month = (month - year) / 10000;
+        month /= 10000;
         //date
         date = (date - month - year) / 1000000;
 
@@ -116,13 +91,13 @@ void checkout(){
         if (year - dob_year > 65) {
             //if over 65 room rate is 10%less
             discount = discount + room_cost * 0.1;
-            room_cost = room_cost * 0.9;
+            room_cost *= 0.9;
         } else if (year - dob_year == 65) {
             if (dob_month <= month) {
                 if (dob_date <= date) {
                     //if over 65 room rate is 10%less
                     discount = discount + room_cost * 0.1;
-                    room_cost = room_cost * 0.9;
+                    room_cost *= 0.9;
                 }
             }
         }
@@ -134,15 +109,15 @@ void checkout(){
 
 
     //calculate cost of board
-    if(party_array[4][index] == 1){//if board type is full board
+    if(guest.brd == 'f'){//if board type is full board
         board_cost = board_cost + (20*len_stay*num_adults) + (10*len_stay*num_children);
         discount = discount+(10*len_stay*num_children);
     }
-    else if(party_array[4][index] == 2){//if board type is half board
+    else if(guest.brd == 'f'){//if board type is half board
         board_cost = board_cost + (15*len_stay*num_adults) + (7.5*len_stay*num_children);
         discount = discount+(7.5*len_stay*num_children);
     }
-    else if(party_array[4][index] == 3){//if board type is full board
+    else if(guest.brd = 'b'){//if board type is b&b
         board_cost = board_cost + (5*len_stay*num_adults) + (2.5*len_stay*num_children);
         discount = discount+(2.5*len_stay*num_children);
     }
@@ -151,8 +126,8 @@ void checkout(){
 
     //daily wakeup calls?
     //1 = true
-    if(party_array[5][index]==1){
-        wakeupcall_cost = wakeupcall_cost + 5;
+    if(guest.wake_up==1){
+        wakeupcall_cost += 5;
     }
 
 
@@ -173,15 +148,7 @@ void checkout(){
 
 
     //clears all data stored about this guest
-    for(i=0;i<6;i++){
-        party_array[i][0] = 0;
-        if(party_array[index+7][i] >0){
-            rooms_arr[party_array[index + 7][i] - 1] = 0;
-        }
-        party_array[index+7][i] = 0;
-    }
-    for(x=0;x<strlen(bookingID[index]);x++){
-        bookingID[index][x] = "\0";
-    }
+    party empty_guest;
+    parties_arr[guest_index] = empty_guest;
 
 }
