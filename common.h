@@ -1,8 +1,8 @@
 #ifndef READING_WEEK_COMMON_H
 #define READING_WEEK_COMMON_H
 
-// Global Variables
-int room_arr[7][4];
+// -- GLOBAL VARIABLES -- //
+int room_arr[7][3];
 char *bookingid_arr[6];
 
 struct Party
@@ -22,19 +22,23 @@ party parties_arr[6];
 int parties_index_arr[6][2];
 
 
-
 // -- FUNCTIONS -- //
 
 // check in
 int check_in();
-int get_int_id(char *id, char *sur);
+int get_int_id(const char *id, char *sur);
 
 
 // rooms
 void init_arr();
 void display_available_rooms();
-int add_booking(int room_num);
+int add_booking(int room_num, int total);
 
+// table booking
+int book_table();
+
+// check out
+int checkout();
 
 
 

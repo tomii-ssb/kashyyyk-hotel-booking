@@ -17,11 +17,13 @@ int main(){
 
         switch(usr_opt){
             case '1':
-                if(check_in()) printf("Something went wrong :(");
+                if(check_in()) printf("\nSomething went wrong :(\n");
                 break;
             case '2':
+                if(book_table()) printf("\nSomething went wrong :(\n");
                 break;
             case '3':
+                if(checkout()) printf("\nSomething went wrong :(\n");
                 break;
             default:
                 printf("That is not a valid option :(\n");

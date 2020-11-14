@@ -21,7 +21,7 @@ void generate_booking_id(char *id, const char *sur, int len){
     strcat(id, rand_num_str);
 }
 
-int get_int_id(char *id, char *sur){
+int get_int_id(const char *id, char *sur){
     int ln = strlen(sur);
     char int_id_c[4];
     int int_id = 0;
@@ -70,7 +70,7 @@ int add_party_to_array(party booked_party){
     int party_index = 0;
 
     for(int i=0;i<6;i++){
-        if (parties_arr[i].dob > 0){
+        if (parties_arr[i].dob < 1){
             parties_arr[i] = booked_party;
             party_index = i;
             i = 6;
@@ -86,8 +86,8 @@ int book(int a_num, int c_num, int dob, int ln, int wake_up, char* id, char* brd
     int total = a_num + c_num; // Total people staying
     int current_capacity = 18 - room_arr[6][0]; // max capacity - current guests
     int needed_room_num = 0;
-    int *needed_rooms[6][2];
-    char dob_str[] = "";
+    int needed_rooms[6][2];
+    char dob_str[50] = "";
 
     itoa(dob, dob_str, 10);
 
@@ -117,15 +117,17 @@ int book(int a_num, int c_num, int dob, int ln, int wake_up, char* id, char* brd
         printf("Please enter the number of the room you would like to book (only one):\n");
         fflush(stdin);
         room_to_stay_c = getchar();
-        room_to_stay = atoi(&room_to_stay_c);
+        room_to_stay = (atoi(&room_to_stay_c) - 1);
+
+        printf("you want to stay in room %d, index %d", room_to_stay+1, room_to_stay);
 
         room_capacity = room_arr[room_to_stay][1];
 
-        printf("How many people will be staying in this room?");
-        scanf("%d", &staying_number);
+        printf("How many people will be staying in this room?\n");
+        if(scanf("%d", &staying_number)) printf("scanf worked");
 
         if (staying_number <= room_capacity)
-            needed_rooms[i][1] = &staying_number;
+            needed_rooms[i][1] = staying_number;
         else{
             printf("Room %d's capacity is %d! Please try again :)", room_to_stay, room_capacity);
             i--;
@@ -158,7 +160,7 @@ int book(int a_num, int c_num, int dob, int ln, int wake_up, char* id, char* brd
     for(int i=0;i<6;i++)
 
         // Add booking for each room needed
-        if(needed_rooms[i][1] > 0) add_booking(i);
+        if(needed_rooms[i][1] > 0) add_booking(i, needed_rooms[i][1]);
 
 
     return 0;
@@ -178,7 +180,9 @@ int check_in (){
 
     get_usr_info(usr_surname, &brd, &dob, &ln, &child_num, &adult_num, &wakeup_call);
 
-    generate_booking_id(booking_id, usr_surname, strlen(usr_surname));
+    printf("\nbrd : %c",brd);
+
+    /*generate_booking_id(booking_id, usr_surname, strlen(usr_surname));
 
     printf("id with sur: %s", booking_id);
     get_int_id(booking_id, usr_surname);
@@ -186,6 +190,8 @@ int check_in (){
     if(book(adult_num,child_num,dob,ln,wakeup_call,booking_id,&brd,usr_surname)
             ) return 1;
 
+    printf("\nHere is your booking ID: %s ^_^\n"
+           "Please try to remember it as you need it to book a table and check out :)", booking_id);*/
 
     return 0;
 }

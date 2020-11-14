@@ -9,6 +9,7 @@
  * [room number - 1][1] : Holds the capacity of the room, e.g. 4 people
  * [room number - 1][2] : The daily rate to be payed for the room, e.g. £100
  * [6][0] : Number of people currently staying in hotel */
+int room_arr[7][3];
 
 void init_arr(){
 
@@ -52,7 +53,7 @@ void display_available_rooms(){
 
 }
 
-int add_booking(int room_num){
+int add_booking(int room_num, int total){
 
     // If successful, 0, if not, 1
     int res;
@@ -64,6 +65,9 @@ int add_booking(int room_num){
         res = 0;
     }
     else res = 1;
+
+    // Update number staying in hotel
+    room_arr[6][0] += total;
 
     return res;
 }

@@ -2,9 +2,11 @@
 // the q++, supposing it works, should end the program (as the whole thing is inside a while q = 0), however when it is added to the main code, this instead should send the user back to the selection screen
 // a lot of variables here have very vague names like i, q, p, etc. i know its not good practice however
 
+// written by Tom S
 
 #include <stdio.h>
 #include <string.h>
+#include "common.h"
 
 // the general booking procedure which checks whether the guest can actually book a table
 void general_booking();
@@ -16,36 +18,33 @@ int i = 0, q = 0, num = 0, x = 0;
 //the array which stores the tables
 char tables[6][50];
 
-int main() {
+int book_table() {
     //variable which corresponds to the users bookingID and other details
-    int guest;
+    party guest;
 
-    char restaurantID, ID;
+    char restaurantID[8], ID;
 
     while (q == 0) //easy way to end code and return to start
     {
         printf("Please enter booking ID");
-        scanf("%s", &restaurantID);
+        scanf("%s", restaurantID);
 
-        for (i = 0; i < 1000; i++) //it goes to a very high number because i dont know how to find the exact length of the array, so it should run through the whole array and stop when it reaches an empty position
+        for (i = 0; i < 6; i++)
         {
-            if (restaurantID = party_array[0][i])
+            if (strcmp(restaurantID, *parties_arr[i].booking_id))
             {
-                i = guest; //as each guest takes up one position on each array row, this number should be the guests number for every row
+                guest = parties_arr[i];
                 general_booking(guest); //subroutine
                 q++;
             }
-            else if (party_array[0][i] = "\0")
-            {
-                break; //breaks the program when the positions stop being occupied, aka it has run through the whole array
-            }
         }
-        printf("You are not a current guest, please go back and enter your name and details.");
-        q++;
+        printf("\nYou are not a current guest, please go back and enter your name and details.\n");
     }
+
+    return 0;
 }
 
-void general_booking(int guest) {
+void general_booking(party guest) {
     //strcpy(tables[0], "BOOKED"); //initialising tables as already booked, used to test so can get rid of this if you'd like
     //strcpy(tables[1], "BOOKED");
     //strcpy(tables[2], "BOOKED");
@@ -61,16 +60,17 @@ void general_booking(int guest) {
     strcpy(tables[5], "6. Tatooine9pm");
 
     int p = 0;
+    int total_staying = guest.a_num = guest.c_num;
 
     while (q == 0) {
-        if (party_array[4][guest] = 3) { //checks that the user isn't staying for B&B
+        if (guest.brd = 'b') { //checks that the user isn't staying for B&B
             printf("As you are booked in for Bed and Breakfast, you cannot book a table.");
             q++;
         } else {
-            if (0 < (party_array[2][guest] + party_array[3][guest]) >=4) { //checks that there aren't more than 4 people or less than 0 people
+            if (total_staying >= 4) { //checks that there aren't more than 4 people or less than 0 people
                 printf("I'm afraid that due to the number of people you have, you cannot book a table.");
                 q++;
-            } else {
+            } else if(total_staying){
 
                 printf("The available tables and their times are:"); //for loop outputs all the table names (excluding ones that are already booked, which outputs "BOOKED" in its place)
                 for (i = 0; i <= 6; i++) {
@@ -89,20 +89,10 @@ void general_booking(int guest) {
                 scanf("%d", &num);
                 switch (num) {
                     case 1:
-                        booking();
-                        q++;
                     case 2:
-                        booking();
-                        q++;
                     case 3:
-                        booking();
-                        q++;
                     case 4:
-                        booking();
-                        q++;
                     case 5:
-                        booking();
-                        q++;
                     case 6:
                         booking();
                         q++;
