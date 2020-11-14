@@ -63,10 +63,22 @@ void checkout(){
     //calculate the cost of the rooms used
     for(i=0;i<6;i++){
         //if the room number is > 1
-        if(party_array[index+7][i]>1){
+        f(party_array[index+7][i]>0){
             room_num = party_array[index+7][i];
+            //finds cost for each particular room
+            if(room_num == 1 || room_num == 2){
+                room_cost = room_cost + 100;
+            }
+            else if(room_num == 3){
+                room_cost = room_cost + 85;
+            }
+            else if(room_num == 4 || room_num == 5){
+                room_cost = room_cost + 75;
+            }
+            else if(room_num == 6){
+                room_cost = room_cost + 50;
 
-
+            }
         }
     }
 
