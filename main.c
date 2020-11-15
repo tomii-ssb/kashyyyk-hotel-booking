@@ -7,6 +7,9 @@ int main(){
     // Initialise rooms array
     init_arr();
 
+    // Initialise tables array
+    init_tables();
+
     for(;;){
 
         char usr_opt = ' '; // Option user chooses

@@ -6,7 +6,6 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
 #include "common.h"
 
 // the general booking procedure which checks whether the guest can actually book a table
@@ -14,10 +13,33 @@ int general_booking();
 //the specific procedure which "books" a table (edits an element in the table array)
 int booking();
 
+//table that the user books
+table booked_table;
+
 int i = 0, q = 0, num = 0, x = 0;
 
 //the array which stores the tables
-char tables[6][2] = (char *) malloc(12);
+table tables_arr[6];
+
+void init_tables(){
+    strcpy(tables_arr[0].name, "Endor");
+    strcpy(tables_arr[0].time, "7pm");
+
+    strcpy(tables_arr[1].name, "Endor");
+    strcpy(tables_arr[1].time, "9pm");
+
+    strcpy(tables_arr[2].name, "Naboo");
+    strcpy(tables_arr[2].time, "7pm");
+
+    strcpy(tables_arr[3].name, "Naboo");
+    strcpy(tables_arr[3].time, "9pm");
+
+    strcpy(tables_arr[4].name, "Tatooine");
+    strcpy(tables_arr[4].time, "7pm");
+
+    strcpy(tables_arr[5].name, "Tatooine");
+    strcpy(tables_arr[5].time, "9pm");
+}
 
 int book_table() {
     //variable which corresponds to the users bookingID and other details
@@ -50,21 +72,6 @@ int book_table() {
 }
 
 int general_booking(party guest) {
-    //strcpy(tables[0], "BOOKED"); //initialising tables as already booked, used to test so can get rid of this if you'd like
-    //strcpy(tables[1], "BOOKED");
-    //strcpy(tables[2], "BOOKED");
-    //strcpy(tables[3], "BOOKED");
-    //strcpy(tables[4], "BOOKED");
-    //strcpy(tables[5], "BOOKED");
-
-    strcpy(&tables[0][0], "1. Endor7pm"); //actual table names and times
-    strcpy(&tables[1][0], "2. Endor9pm");
-    strcpy(&tables[2][0], "3. Naboo7pm");
-    strcpy(&tables[3][0], "4. Naboo9pm");
-    strcpy(&tables[4][0], "5. Tatooine7pm");
-    strcpy(&tables[5][0], "6. Tatooine9pm");
-
-    malloc(s)
 
     int p = 0;
     int total_staying = guest.a_num = guest.c_num;
@@ -79,16 +86,18 @@ int general_booking(party guest) {
                 q++;
             } else{
 
-                printf("The available tables and their times are:"); //for loop outputs all the table names (excluding ones that are already booked, which outputs "BOOKED" in its place)
-                for (i = 0; i <= 6; i++) {
-                    printf("\n%s", tables[i]);
+                printf("The available tables and their times are:\n"); //for loop outputs all the table names (excluding ones that are already booked, which outputs "BOOKED" in its place)
+                for (i = 0; i < 6; i++) {
+                    table current_table = tables_arr[i];
 
-                    if (!strcmp(&tables[i][0], "BOOKED")) { //if strings are equal
+                    printf("%s at %s\n", current_table.name, current_table.time);
+
+                    if (current_table.booked) {
                         p++; //use this to potentially end this code early in case all tables are booked
                     }
                 }
                 if (p == 6) {
-                    printf("There are no more available tables. Please try another day.");
+                    printf("There are no more available tables. Please try another day.\n");
                     q++;
                 }
                 printf("Which table? For the first table and time, type '1', the second table and time, type '2', etc."); //had to use switch case as last resort - cheap i know but it works :/
@@ -100,7 +109,10 @@ int general_booking(party guest) {
                     case 4:
                     case 5:
                     case 6:
+                        booked_table = tables_arr[num-1];
                         if (booking()) return 1;
+                        else return 0;
+                        break;
                     default:
                         printf("Not valid\n");
                 }
@@ -118,15 +130,14 @@ int booking() {
 
     q = 0;
 
-    if (!strcmp(tables[num - 1], "BOOKED")) //checks if table is already booked and breaks without booking if so
+    if (booked_table.booked) //checks if table is already booked and breaks without booking if so
     {
         printf("Table already booked.");
         return 1;
     } else {
-        strcpy(&tables[num - 1][1],
-               "BOOKED"); //changes elements name to "BOOKED" so that it cannot be booked again until the program is rebooted
+        booked_table.booked = 1; //changes elements name to "BOOKED" so that it cannot be booked again until the program is rebooted
 
-        printf("\nYou have successfully the %s table :)\n", &tables[num - 1][0]);
+        printf("\nYou have successfully the %s table at %s :)\n", booked_table.name, booked_table.time);
     }
 
     return 0;

@@ -118,7 +118,7 @@ int checkout(){
         board_cost = board_cost + (20*len_stay*num_adults) + (10*len_stay*num_children);
         discount = discount+(10*len_stay*num_children);
     }
-    else if(guest.brd == 'f'){//if board type is half board
+    else if(guest.brd == 'h'){//if board type is half board
         board_cost = board_cost + (15*len_stay*num_adults) + (7.5*len_stay*num_children);
         discount = discount+(7.5*len_stay*num_children);
     }
@@ -138,7 +138,7 @@ int checkout(){
 
 
     //calculate total cost
-    total_cost = room_cost + board_cost + wakeupcall_cost;
+    total_cost = (room_cost + board_cost + wakeupcall_cost) - discount;
 
     //print bill
     printf("\n\n\n\n\n\n\n\n\n\nBooking ID: %s\nCOSTS:\nRoom Cost:      %.2fGBP\nBoard Cost:      %.2fGBP\n",input_bookingID,room_cost,board_cost);

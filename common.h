@@ -17,9 +17,17 @@ struct Party
     int stayed_rooms[6][2];
 };
 
+struct Table
+{
+    char name[10];
+    char time[4];
+    int booked;
+};
+
 typedef struct Party party;
+typedef struct Table table;
 party parties_arr[6];
-int parties_index_arr[6][2];
+table tables_arr[6];
 
 
 // -- FUNCTIONS -- //
@@ -36,6 +44,7 @@ int add_booking(int room_num, int total);
 
 // table booking
 int book_table();
+void init_tables();
 
 // check out
 int checkout();
