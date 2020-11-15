@@ -1,7 +1,3 @@
-//alright so after a full on week, this is what i got. some quick things you should prolly know:
-// the q++, supposing it works, should end the program (as the whole thing is inside a while q = 0), however when it is added to the main code, this instead should send the user back to the selection screen
-// a lot of variables here have very vague names like i, q, p, etc. i know its not good practice however
-
 // written by Tom S
 
 #include <stdio.h>
@@ -90,7 +86,7 @@ int general_booking(Party guest) {
                 for (i = 0; i < 6; i++) {
                     Table current_table = tables_arr[i];
 
-                    printf("%s at %s\n", current_table.name, current_table.time);
+                    printf("%d. %s at %s\n", i+1, current_table.name, current_table.time);
 
                     if (current_table.booked) {
                         p++; //use this to potentially end this code early in case all tables are booked
@@ -100,7 +96,8 @@ int general_booking(Party guest) {
                     printf("There are no more available tables. Please try another day.\n");
                     q++;
                 }
-                printf("Which table? For the first table and time, type '1', the second table and time, type '2', etc."); //had to use switch case as last resort - cheap i know but it works :/
+                printf("Which table? For the first table and time, type '1', "
+                       "the second table and time, type '2', etc.");
                 scanf("%d", &num);
                 switch (num) {
                     case 1:
@@ -137,7 +134,7 @@ int booking() {
     } else {
         booked_table.booked = 1; //changes elements name to "BOOKED" so that it cannot be booked again until the program is rebooted
 
-        printf("\nYou have successfully the %s table at %s :)\n", booked_table.name, booked_table.time);
+        printf("\nYou have successfully booked the %s table at %s :)\n", booked_table.name, booked_table.time);
     }
 
     return 0;

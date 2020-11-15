@@ -23,32 +23,89 @@ void generate_booking_id(char *id, const char *sur){
 
 void get_usr_info(char *sur, char* brd, char* dob, int* ln, int* c_num, int* a_num, int* wakeup){
 
+    // While loop conditions
+    int j = 0;
+    int k = 0;
+
     // Will store 'y' or 'n', depending on whether user wants a daily wake-up call or not
     char wakeup_inp = ' ';
 
     printf("Please enter your surname (in lowercase):\n");
-    scanf("%s", sur);
+    fflush(stdin);
+    if (scanf("%s", sur)){}
+    else{
+        printf("\nAn error occurred, please try again :/\n");
+        get_usr_info(sur, brd, dob, ln, c_num, a_num, wakeup);
+    }
 
     printf("Please enter your date of birth (format DDMMYYYY):\n");
-    scanf("%s", dob);
+    fflush(stdin);
+    if(scanf("%s", dob)){}
+    else{
+        printf("\nAn error occurred, please try again :/\n");
+        get_usr_info(sur, brd, dob, ln, c_num, a_num, wakeup);
+    }
 
     printf("How many adults will be staying?\n");
-    scanf("%d", a_num);
+    fflush(stdin);
+    if(scanf("%d", a_num)){}
+    else{
+        printf("\nAn error occurred, please try again :/\n");
+        get_usr_info(sur, brd, dob, ln, c_num, a_num, wakeup);
+    }
 
     printf("How many children will be staying? (If none, please enter 0)\n");
-    scanf("%d", c_num);
+    fflush(stdin);
+    if(scanf("%d", c_num)){}
+    else{
+        printf("\nAn error occurred, please try again :/\n");
+        get_usr_info(sur, brd, dob, ln, c_num, a_num, wakeup);
+    }
 
     printf("How long will you be staying? (In full days)\n");
-    scanf("%d", ln);
+    fflush(stdin);
+    if(scanf("%d", ln)){}
+    else{
+        printf("\nAn error occurred, please try again :/\n");
+        get_usr_info(sur, brd, dob, ln, c_num, a_num, wakeup);
+    }
 
-    printf("Please enter F for full board, H for half board, or B for bed & breakfast:\n");
-    scanf("%c ", brd);
+    while(!j) {
+        printf("Please enter F for full board, H for half board, or B for bed & breakfast:\n");
+        fflush(stdin);
+        if (scanf("%c", brd)){}
+        else {
+            printf("\nAn error occurred, please try again :/\n");
+            get_usr_info(sur, brd, dob, ln, c_num, a_num, wakeup);
+        }
 
-    printf("Would you like a daily wake-up call? (y for yes, n for no)\n");
-    scanf("%c ", &wakeup_inp);
+        switch(*brd){
+            case 'f':
+            case 'h':
+            case 'b': j++; break;
+            default:
+                printf("\nNot a valid option, please try again :)\n");
+                break;
+        }
+    }
 
-    if (wakeup_inp == 'y') *wakeup = 1;
-    else if (wakeup_inp == 'n') *wakeup = 0;
+    while(!k) {
+        printf("Would you like a daily wake-up call? (y for yes, n for no)\n");
+        fflush(stdin);
+        if(scanf("%c", &wakeup_inp)){}
+        else{
+            printf("\nAn error occurred, please try again :/\n");
+            get_usr_info(sur, brd, dob, ln, c_num, a_num, wakeup);
+        }
+
+        switch(wakeup_inp){
+            case 'y': *wakeup = 1, k++; break;
+            case 'n': *wakeup = 0, k++; break;
+            default:
+                printf("\nNot a valid option, please try again :)\n");
+                break;
+        }
+    }
 }
 
 int add_party_to_array(Party booked_party){
@@ -71,7 +128,7 @@ int add_party_to_array(Party booked_party){
     return party_index;
 }
 
-int book(int a_num, int c_num, const char *dob, int ln, int wake_up, const char *id, char brd, char* sur){
+int book(int a_num, int c_num, const char *dob, int ln, int wake_up, const char *id, char brd){
 
     // var
     int total = a_num + c_num; // Total people staying
@@ -81,8 +138,6 @@ int book(int a_num, int c_num, const char *dob, int ln, int wake_up, const char 
     int booked_people = total;
     int available_rooms = 0;
 
-    printf("\ndob: %s\n", dob);
-
     // Init needed_rooms
     for(int i=0;i<6;i++) needed_rooms[i][1] = 0;
 
@@ -91,7 +146,6 @@ int book(int a_num, int c_num, const char *dob, int ln, int wake_up, const char 
         return 1;
     }
 
-    printf("\ndob ln: %zu", strlen(dob));
     // DOB must be in DDMMYYYY format
     if(strlen(dob) != 8) return 1;
 
@@ -113,7 +167,7 @@ int book(int a_num, int c_num, const char *dob, int ln, int wake_up, const char 
                 int staying_number = 0;
                 int room_capacity = 0;
 
-                printf("Please enter the number of the room you would like to book (only one):\n");
+                printf("Please enter the number of the room you would like to book (one at a time):\n");
                 fflush(stdin);
                 room_to_stay_c = getchar();
                 room_to_stay = (atoi(&room_to_stay_c) - 1);
@@ -146,7 +200,7 @@ int book(int a_num, int c_num, const char *dob, int ln, int wake_up, const char 
                 case 'q': return 2;
                 case 'c': break;
                 default:
-                    printf("That wasn't one of the options so you're just gonna quit lol");
+                    printf("Wasn't one of the options :/\n");
                     return 2;
             }
         }
@@ -154,8 +208,6 @@ int book(int a_num, int c_num, const char *dob, int ln, int wake_up, const char 
     }
 
     Party booked_party;
-
-    printf("\nprogram reached booked party part\n");
 
     // Party structure assignment
     booked_party.a_num = a_num;
@@ -202,13 +254,12 @@ int check_in (){
 
     generate_booking_id(booking_id, usr_surname);
 
-    switch(book(adult_num,child_num,dob,ln,wakeup_call,booking_id,brd,usr_surname)){
+    switch(book(adult_num,child_num,dob,ln,wakeup_call,booking_id,brd)){
         case 1: return 1;
         case 2:
             printf("\nQuit successfully :)\n");
             return 0;
     }
-
 
     printf("\nHere is your booking ID: %s ^_^\n"
            "Please try to remember it as you need it to book a table and check out :)", booking_id);
