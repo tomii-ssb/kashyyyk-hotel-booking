@@ -28,8 +28,9 @@ int checkout(){
                 break;
             }
         }
-        if (q>0) break;
-        printf("\nYou are not a current guest, please go back and enter your name and details.\n");
+
+        if (q > 0) break;
+        printf("\nYour details were not found, please try again :)\n");
     }
 
     //variables
@@ -106,7 +107,7 @@ int checkout(){
             }
         }
         if(dob_year>year || dob_year == year && dob_month>=month && dob_date>date){
-            printf("date of birth entered is greater than today's date");
+            printf("Date of birth entered is greater than today's date :(\n");
         }
     }while(dob_year>year || dob_year == year && dob_month>=month && dob_date>date);
 
