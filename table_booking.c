@@ -31,7 +31,8 @@ int book_table() {
 
         for (i = 0; i < 6; i++)
         {
-            if (strcmp(restaurantID, *parties_arr[i].booking_id))
+            // If strcmp returns 0 (strings are identical)
+            if (!strcmp(restaurantID, parties_arr[i].booking_id))
             {
                 guest = parties_arr[i];
                 general_booking(guest); //subroutine
@@ -63,11 +64,11 @@ void general_booking(party guest) {
     int total_staying = guest.a_num = guest.c_num;
 
     while (q == 0) {
-        if (guest.brd = 'b') { //checks that the user isn't staying for B&B
+        if (guest.brd == 'b') { //checks that the user isn't staying for B&B
             printf("As you are booked in for Bed and Breakfast, you cannot book a table.");
             q++;
         } else {
-            if (total_staying >= 4) { //checks that there aren't more than 4 people or less than 0 people
+            if (total_staying > 4 || total_staying <= 0 ){ //checks that there aren't more than 4 people or less than 0 people
                 printf("I'm afraid that due to the number of people you have, you cannot book a table.");
                 q++;
             } else if(total_staying){
@@ -77,7 +78,7 @@ void general_booking(party guest) {
                     printf("\n%s", tables[i]);
 
                     if (strcmp(tables[i], "BOOKED") == 0) { //to see if all of the tables are "BOOKED"
-                        p = p + 1; //use this to potentially end this code early in case all tables are booked
+                        p++; //use this to potentially end this code early in case all tables are booked
                     }
                 }
                 if (p == 6) {
@@ -96,6 +97,7 @@ void general_booking(party guest) {
                     case 6:
                         booking();
                         q++;
+                        break;
                     default:
                         printf("Not valid");
                         q++;

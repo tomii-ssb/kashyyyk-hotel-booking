@@ -7,14 +7,14 @@ char *bookingid_arr[6];
 
 struct Party
 {
-    char *booking_id[50];
+    char booking_id[50];
     int dob;
     int a_num;
     int c_num;
     char brd;
     int stay_ln;
     int wake_up;
-    int *stayed_rooms[6][2];
+    int stayed_rooms[6][2];
 };
 
 typedef struct Party party;

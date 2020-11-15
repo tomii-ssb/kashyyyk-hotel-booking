@@ -80,7 +80,7 @@ int add_party_to_array(party booked_party){
     return party_index;
 }
 
-int book(int a_num, int c_num, int dob, int ln, int wake_up, char* id, char* brd, char* sur){
+int book(int a_num, int c_num, int dob, int ln, int wake_up, const char* id, char brd, char* sur){
 
     // var
     int total = a_num + c_num; // Total people staying
@@ -106,7 +106,7 @@ int book(int a_num, int c_num, int dob, int ln, int wake_up, char* id, char* brd
     fflush(stdin);
     scanf("%d", &needed_room_num);
 
-    for(int i=0;i<needed_room_num;i++){
+    for(int i=0;i<needed_room_num;i++) {
 
         char room_to_stay_c = ' ';
         int room_to_stay = 0;
@@ -119,16 +119,17 @@ int book(int a_num, int c_num, int dob, int ln, int wake_up, char* id, char* brd
         room_to_stay_c = getchar();
         room_to_stay = (atoi(&room_to_stay_c) - 1);
 
-        printf("you want to stay in room %d, index %d", room_to_stay+1, room_to_stay);
+        printf("you want to stay in room %d, index %d", room_to_stay + 1, room_to_stay);
 
         room_capacity = room_arr[room_to_stay][1];
 
         printf("How many people will be staying in this room?\n");
-        if(scanf("%d", &staying_number)) printf("scanf worked");
+        if (scanf("%d", &staying_number)) printf("scanf worked");
 
-        if (staying_number <= room_capacity)
+        if (staying_number <= room_capacity){
             needed_rooms[i][1] = staying_number;
-        else{
+            printf("\nthis happened\n");
+        }else{
             printf("Room %d's capacity is %d! Please try again :)", room_to_stay, room_capacity);
             i--;
         }
@@ -140,7 +141,7 @@ int book(int a_num, int c_num, int dob, int ln, int wake_up, char* id, char* brd
     booked_party.dob = dob;
     booked_party.a_num = a_num;
     booked_party.c_num = c_num;
-    booked_party.brd = *brd;
+    booked_party.brd = brd;
     booked_party.stay_ln = ln;
     booked_party.wake_up = wake_up;
 
@@ -149,9 +150,8 @@ int book(int a_num, int c_num, int dob, int ln, int wake_up, char* id, char* brd
         for(int j=0;j<2;j++) booked_party.stayed_rooms[i][j] = needed_rooms[i][j];
     }
 
-
-    for(int i=0;i<8;i++){
-        booked_party.booking_id[i] = &id[i];
+    for(int i=0;i<strlen(id);i++){
+        booked_party.booking_id[i] = id[i];
     }
 
     add_party_to_array(booked_party);
@@ -180,18 +180,16 @@ int check_in (){
 
     get_usr_info(usr_surname, &brd, &dob, &ln, &child_num, &adult_num, &wakeup_call);
 
-    printf("\nbrd : %c",brd);
-
-    /*generate_booking_id(booking_id, usr_surname, strlen(usr_surname));
+    generate_booking_id(booking_id, usr_surname, strlen(usr_surname));
 
     printf("id with sur: %s", booking_id);
     get_int_id(booking_id, usr_surname);
 
-    if(book(adult_num,child_num,dob,ln,wakeup_call,booking_id,&brd,usr_surname)
+    if(book(adult_num,child_num,dob,ln,wakeup_call,booking_id,brd,usr_surname)
             ) return 1;
 
     printf("\nHere is your booking ID: %s ^_^\n"
-           "Please try to remember it as you need it to book a table and check out :)", booking_id);*/
+           "Please try to remember it as you need it to book a table and check out :)", booking_id);
 
     return 0;
 }

@@ -2,7 +2,7 @@
 #include <string.h>
 #include "common.h"
 
-void checkout(){
+int checkout(){
 
     //loop variables
     int i,x;
@@ -13,18 +13,22 @@ void checkout(){
     int q = 0;
 
     //enter booking id and validate it
-    while(!q){
+    while(1){
         printf("enter your booking ID\n");
         fflush(stdin);
         scanf("%s",input_bookingID);//had problems with gets
+        printf("\nyou entered: %s\n",input_bookingID);
         for (i = 0; i < 6; i++) {
-            //compares the id user entered and stored ID's
-            if (strcmp(input_bookingID, parties_arr[i].booking_id)) {
+
+            // If strcmp returns 0 (strings are identical)
+            if (!strcmp(input_bookingID, parties_arr[i].booking_id)) {
                 guest = parties_arr[i];
                 guest_index = i;
                 q++;
+                break;
             }
         }
+        if (q>0) break;
         printf("\nYou are not a current guest, please go back and enter your name and details.\n");
     }
 
@@ -151,4 +155,5 @@ void checkout(){
     party empty_guest;
     parties_arr[guest_index] = empty_guest;
 
+    return 0;
 }
