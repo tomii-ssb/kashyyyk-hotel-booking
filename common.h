@@ -1,41 +1,25 @@
 #ifndef READING_WEEK_COMMON_H
 #define READING_WEEK_COMMON_H
+#include "types.h"
 
 // -- GLOBAL VARIABLES -- //
 int room_arr[7][3];
 char *bookingid_arr[6];
+Party parties_arr[6];
+Table tables_arr[6];
 
-struct Party
-{
-    char booking_id[50];
-    int dob;
-    int a_num;
-    int c_num;
-    char brd;
-    int stay_ln;
-    int wake_up;
-    int stayed_rooms[6][2];
-};
-
-struct Table
-{
-    char name[10];
-    char time[4];
-    int booked;
-};
-
-typedef struct Party party;
-typedef struct Table table;
-party parties_arr[6];
-table tables_arr[6];
 
 
 // -- FUNCTIONS -- //
 
+// utils
+int dob_int(char* dob);
+Date str_to_date(char *date_c);
+int compare_dates(Date d1, Date d2);
+int find_age(Date dob, Date date);
+
 // check in
 int check_in();
-int get_int_id(const char *id, char *sur);
-
 
 // rooms
 void init_arr();
@@ -48,7 +32,5 @@ void init_tables();
 
 // check out
 int checkout();
-
-
 
 #endif //READING_WEEK_COMMON_H

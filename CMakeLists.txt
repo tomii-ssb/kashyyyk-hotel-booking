@@ -3,4 +3,4 @@ project(Reading_Week C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(Reading_Week check_in.c rooms.c common.h main.c check_out.c table_booking.c)
+add_executable(Reading_Week check_in.c rooms.c common.h main.c check_out.c table_booking.c utils.c types.h)

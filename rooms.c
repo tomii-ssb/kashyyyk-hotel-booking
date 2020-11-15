@@ -50,7 +50,7 @@ int display_available_rooms(){
 
         // If room is free, output room number
         if(room_arr[i][0] == 0){
-            printf("Room %d (GBP %d/day per person), Capacity : %d\n", i+1, room_arr[i][2], room_arr[i][1]);
+            printf("Room %d (GBP %d/day), Capacity : %d\n", i+1, room_arr[i][2], room_arr[i][1]);
             available_rooms++;
         }
     }

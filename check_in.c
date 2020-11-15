@@ -6,7 +6,7 @@
 #include <string.h>
 #include "common.h"
 
-party parties_arr[6];
+Party parties_arr[6];
 
 void generate_booking_id(char *id, const char *sur){
     srand(time(0));
@@ -21,20 +21,7 @@ void generate_booking_id(char *id, const char *sur){
     strcat(id, rand_num_str);
 }
 
-int get_int_id(const char *id, char *sur){
-    int ln = strlen(sur);
-    char int_id_c[4];
-    int int_id = 0;
-
-    for(int i=ln;i<ln+4;i++)
-        int_id_c[i-(ln)] = id[i];
-
-    int_id = atoi(int_id_c);
-
-    return int_id;
-}
-
-void get_usr_info(char *sur, char* brd, int* dob, int* ln, int* c_num, int* a_num, int* wakeup){
+void get_usr_info(char *sur, char* brd, char* dob, int* ln, int* c_num, int* a_num, int* wakeup){
 
     // Will store 'y' or 'n', depending on whether user wants a daily wake-up call or not
     char wakeup_inp = ' ';
@@ -43,7 +30,7 @@ void get_usr_info(char *sur, char* brd, int* dob, int* ln, int* c_num, int* a_nu
     scanf("%s", sur);
 
     printf("Please enter your date of birth (format DDMMYYYY):\n");
-    scanf("%d", dob);
+    scanf("%s", dob);
 
     printf("How many adults will be staying?\n");
     scanf("%d", a_num);
@@ -64,13 +51,17 @@ void get_usr_info(char *sur, char* brd, int* dob, int* ln, int* c_num, int* a_nu
     else if (wakeup_inp == 'n') *wakeup = 0;
 }
 
-int add_party_to_array(party booked_party){
+int add_party_to_array(Party booked_party){
 
     // Index at which the party struct will be stored
     int party_index = 0;
 
     for(int i=0;i<6;i++){
-        if (parties_arr[i].dob < 1){
+
+        // DOB as int
+        int dob = dob_int(parties_arr[i].dob);
+
+        if (dob < 1){
             parties_arr[i] = booked_party;
             party_index = i;
             i = 6;
@@ -80,7 +71,7 @@ int add_party_to_array(party booked_party){
     return party_index;
 }
 
-int book(int a_num, int c_num, int dob, int ln, int wake_up, const char *id, char brd, char* sur){
+int book(int a_num, int c_num, const char *dob, int ln, int wake_up, const char *id, char brd, char* sur){
 
     // var
     int total = a_num + c_num; // Total people staying
@@ -89,22 +80,20 @@ int book(int a_num, int c_num, int dob, int ln, int wake_up, const char *id, cha
     int needed_rooms[6][2];
     int booked_people = total;
     int available_rooms = 0;
-    char dob_str[50] = "";
+
+    printf("\ndob: %s\n", dob);
 
     // Init needed_rooms
-    for(int i=0;i<6;i++){
-        needed_rooms[i][1] = 0;
-    }
-
-    itoa(dob, dob_str, 10);
+    for(int i=0;i<6;i++) needed_rooms[i][1] = 0;
 
     if(total>current_capacity){
         printf("We do not currently have the capacity for your party :(((");
         return 1;
     }
 
+    printf("\ndob ln: %zu", strlen(dob));
     // DOB must be in DDMMYYYY format
-    if(strlen(dob_str) != 8) return 1;
+    if(strlen(dob) != 8) return 1;
 
     printf("At the current time, these rooms are available:\n");
     available_rooms = display_available_rooms();
@@ -164,16 +153,18 @@ int book(int a_num, int c_num, int dob, int ln, int wake_up, const char *id, cha
 
     }
 
-    party booked_party;
+    Party booked_party;
+
+    printf("\nprogram reached booked party part\n");
 
     // Party structure assignment
-    booked_party.dob = dob;
     booked_party.a_num = a_num;
     booked_party.c_num = c_num;
     booked_party.brd = brd;
     booked_party.stay_ln = ln;
     booked_party.wake_up = wake_up;
 
+    strcpy(booked_party.dob, dob);
     strcpy(booked_party.booking_id, id);
 
     // Assign needed_room array values to stayed_rooms 'Party' struct element array
@@ -197,7 +188,7 @@ int check_in (){
 
     // Variables
     char usr_surname[100];
-    int dob = 0;
+    char dob[50];
     int adult_num = 0; // Number of adult guests
     int child_num = 0;
     char brd = ' '; // Board type
@@ -205,7 +196,9 @@ int check_in (){
     int ln = 0; // Length of stay (in full days)
     char booking_id[50];
 
-    get_usr_info(usr_surname, &brd, &dob, &ln, &child_num, &adult_num, &wakeup_call);
+    get_usr_info(usr_surname, &brd, dob, &ln, &child_num, &adult_num, &wakeup_call);
+
+    printf("\ndob be: %s\n", dob);
 
     generate_booking_id(booking_id, usr_surname);
 

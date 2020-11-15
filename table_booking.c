@@ -14,12 +14,12 @@ int general_booking();
 int booking();
 
 //table that the user books
-table booked_table;
+Table booked_table;
 
 int i = 0, q = 0, num = 0, x = 0;
 
 //the array which stores the tables
-table tables_arr[6];
+Table tables_arr[6];
 
 void init_tables(){
     strcpy(tables_arr[0].name, "Endor");
@@ -43,7 +43,7 @@ void init_tables(){
 
 int book_table() {
     //variable which corresponds to the users bookingID and other details
-    party guest;
+    Party guest;
 
     char restaurantID[8], ID;
 
@@ -71,7 +71,7 @@ int book_table() {
     return 0;
 }
 
-int general_booking(party guest) {
+int general_booking(Party guest) {
 
     int p = 0;
     int total_staying = guest.a_num = guest.c_num;
@@ -88,7 +88,7 @@ int general_booking(party guest) {
 
                 printf("The available tables and their times are:\n"); //for loop outputs all the table names (excluding ones that are already booked, which outputs "BOOKED" in its place)
                 for (i = 0; i < 6; i++) {
-                    table current_table = tables_arr[i];
+                    Table current_table = tables_arr[i];
 
                     printf("%s at %s\n", current_table.name, current_table.time);
 
