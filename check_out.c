@@ -115,16 +115,16 @@ int checkout(){
 
     //calculate cost of board
     if(guest.brd == 'f'){//if board type is full board
-        board_cost = board_cost + (20*len_stay*num_adults) + (10*len_stay*num_children);
-        discount = discount+(10*len_stay*num_children);
+        board_cost += (20*len_stay*num_adults) + (10*len_stay*num_children);
+        discount += (10*len_stay*num_children);
     }
     else if(guest.brd == 'h'){//if board type is half board
-        board_cost = board_cost + (15*len_stay*num_adults) + (7.5*len_stay*num_children);
-        discount = discount+(7.5*len_stay*num_children);
+        board_cost += (15*len_stay*num_adults) + (7.5*len_stay*num_children);
+        discount += (7.5*len_stay*num_children);
     }
     else if(guest.brd = 'b'){//if board type is b&b
-        board_cost = board_cost + (5*len_stay*num_adults) + (2.5*len_stay*num_children);
-        discount = discount+(2.5*len_stay*num_children);
+        board_cost += (5*len_stay*num_adults) + (2.5*len_stay*num_children);
+        discount += (2.5*len_stay*num_children);
     }
 
 
