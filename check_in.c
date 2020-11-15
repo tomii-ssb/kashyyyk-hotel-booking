@@ -8,13 +8,13 @@
 
 party parties_arr[6];
 
-void generate_booking_id(char *id, const char *sur, int len){
+void generate_booking_id(char *id, const char *sur){
     srand(time(0));
 
     // Random number ( random enough :) )
     int rand_num = 1000+(rand()%9000);
 
-    char rand_num_str[5];
+    char rand_num_str[4];
     sprintf(rand_num_str, "%d", rand_num);
 
     strcat(id, sur);
@@ -39,7 +39,7 @@ void get_usr_info(char *sur, char* brd, int* dob, int* ln, int* c_num, int* a_nu
     // Will store 'y' or 'n', depending on whether user wants a daily wake-up call or not
     char wakeup_inp = ' ';
 
-    printf("Please enter your surname:\n");
+    printf("Please enter your surname (in lowercase):\n");
     scanf("%s", sur);
 
     printf("Please enter your date of birth (format DDMMYYYY):\n");
@@ -80,14 +80,21 @@ int add_party_to_array(party booked_party){
     return party_index;
 }
 
-int book(int a_num, int c_num, int dob, int ln, int wake_up, const char* id, char brd, char* sur){
+int book(int a_num, int c_num, int dob, int ln, int wake_up, const char *id, char brd, char* sur){
 
     // var
     int total = a_num + c_num; // Total people staying
     int current_capacity = 18 - room_arr[6][0]; // max capacity - current guests
     int needed_room_num = 0;
     int needed_rooms[6][2];
+    int booked_people = total;
+    int available_rooms = 0;
     char dob_str[50] = "";
+
+    // Init needed_rooms
+    for(int i=0;i<6;i++){
+        needed_rooms[i][1] = 0;
+    }
 
     itoa(dob, dob_str, 10);
 
@@ -100,39 +107,61 @@ int book(int a_num, int c_num, int dob, int ln, int wake_up, const char* id, cha
     if(strlen(dob_str) != 8) return 1;
 
     printf("At the current time, these rooms are available:\n");
-    display_available_rooms();
+    available_rooms = display_available_rooms();
 
-    printf("How many rooms will you need?\n");
-    fflush(stdin);
-    scanf("%d", &needed_room_num);
+    while(booked_people){ //while booked_people != 0
 
-    for(int i=0;i<needed_room_num;i++) {
-
-        char room_to_stay_c = ' ';
-        int room_to_stay = 0;
-
-        int staying_number = 0;
-        int room_capacity = 0;
-
-        printf("Please enter the number of the room you would like to book (only one):\n");
+        printf("How many rooms will you need?\n");
         fflush(stdin);
-        room_to_stay_c = getchar();
-        room_to_stay = (atoi(&room_to_stay_c) - 1);
+        if(!scanf("%d", &needed_room_num)) return 1;
 
-        printf("you want to stay in room %d, index %d", room_to_stay + 1, room_to_stay);
+        if(0 < needed_room_num < available_rooms){
+            for(int i=0;i<needed_room_num;i++) {
 
-        room_capacity = room_arr[room_to_stay][1];
+                char room_to_stay_c = ' ';
+                int room_to_stay = 0;
 
-        printf("How many people will be staying in this room?\n");
-        if (scanf("%d", &staying_number)) printf("scanf worked");
+                int staying_number = 0;
+                int room_capacity = 0;
 
-        if (staying_number <= room_capacity){
-            needed_rooms[i][1] = staying_number;
-            printf("\nthis happened\n");
-        }else{
-            printf("Room %d's capacity is %d! Please try again :)", room_to_stay, room_capacity);
-            i--;
+                printf("Please enter the number of the room you would like to book (only one):\n");
+                fflush(stdin);
+                room_to_stay_c = getchar();
+                room_to_stay = (atoi(&room_to_stay_c) - 1);
+
+                room_capacity = room_arr[room_to_stay][1];
+
+                printf("How many people will be staying in this room?\n");
+                if (scanf("%d", &staying_number)) printf("scanf worked");
+
+                if (staying_number <= room_capacity){
+                    needed_rooms[i][1] = staying_number;
+                    booked_people -= staying_number;
+                }else{
+                    printf("Room %d's capacity is %d! Please try again :)", room_to_stay, room_capacity);
+                    i--;
+                }
+            }
+
+            if (!booked_people) break; // If booked_people == 0 (everyone has been booked)
+            else printf("\nYou did not account for every person in your party :( Please try again ^_^\n");
         }
+        else{
+            char user_opt = ' ';
+            printf("There are %d available rooms man :(\n", available_rooms);
+            printf("Please enter 'q' to exit or 'c' to continue ._.\n");
+            fflush(stdin);
+            user_opt = getchar();
+
+            switch(user_opt){
+                case 'q': return 2;
+                case 'c': break;
+                default:
+                    printf("That wasn't one of the options so you're just gonna quit lol");
+                    return 2;
+            }
+        }
+
     }
 
     party booked_party;
@@ -145,13 +174,11 @@ int book(int a_num, int c_num, int dob, int ln, int wake_up, const char* id, cha
     booked_party.stay_ln = ln;
     booked_party.wake_up = wake_up;
 
+    strcpy(booked_party.booking_id, id);
+
     // Assign needed_room array values to stayed_rooms 'Party' struct element array
     for(int i=0;i<6;i++){
         for(int j=0;j<2;j++) booked_party.stayed_rooms[i][j] = needed_rooms[i][j];
-    }
-
-    for(int i=0;i<strlen(id);i++){
-        booked_party.booking_id[i] = id[i];
     }
 
     add_party_to_array(booked_party);
@@ -180,13 +207,15 @@ int check_in (){
 
     get_usr_info(usr_surname, &brd, &dob, &ln, &child_num, &adult_num, &wakeup_call);
 
-    generate_booking_id(booking_id, usr_surname, strlen(usr_surname));
+    generate_booking_id(booking_id, usr_surname);
 
-    printf("id with sur: %s", booking_id);
-    get_int_id(booking_id, usr_surname);
+    switch(book(adult_num,child_num,dob,ln,wakeup_call,booking_id,brd,usr_surname)){
+        case 1: return 1;
+        case 2:
+            printf("\nQuit successfully :)\n");
+            return 0;
+    }
 
-    if(book(adult_num,child_num,dob,ln,wakeup_call,booking_id,brd,usr_surname)
-            ) return 1;
 
     printf("\nHere is your booking ID: %s ^_^\n"
            "Please try to remember it as you need it to book a table and check out :)", booking_id);

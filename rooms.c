@@ -41,16 +41,21 @@ void init_arr(){
     room_arr[6][0] = 0;
 }
 
-void display_available_rooms(){
+int display_available_rooms(){
+
+    int available_rooms = 0;
 
     // Check through each row (room)
     for(int i=0;i<6;i++){
 
         // If room is free, output room number
-        if(room_arr[i][0] == 0)
+        if(room_arr[i][0] == 0){
             printf("Room %d (GBP %d/day per person), Capacity : %d\n", i+1, room_arr[i][2], room_arr[i][1]);
+            available_rooms++;
+        }
     }
 
+    return available_rooms;
 }
 
 int add_booking(int room_num, int total){

@@ -39,7 +39,7 @@ int get_int_id(const char *id, char *sur);
 
 // rooms
 void init_arr();
-void display_available_rooms();
+int display_available_rooms();
 int add_booking(int room_num, int total);
 
 // table booking

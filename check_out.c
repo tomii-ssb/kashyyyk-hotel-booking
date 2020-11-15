@@ -17,7 +17,6 @@ int checkout(){
         printf("enter your booking ID\n");
         fflush(stdin);
         scanf("%s",input_bookingID);//had problems with gets
-        printf("\nyou entered: %s\n",input_bookingID);
         for (i = 0; i < 6; i++) {
 
             // If strcmp returns 0 (strings are identical)
@@ -37,15 +36,16 @@ int checkout(){
     int room_num;//temporary storage of one of the users room numbers
     float total_cost;//stores the total cost of the user's stay
     int len_stay=guest.stay_ln;//stores the length of the party's stay
-    int num_adults = guest.a_num;
-    int num_children = guest.c_num;//calculates number of guests
+    int num_adults = guest.a_num;//number of adults
+    int num_children = guest.c_num;//number of children
     float room_cost=0,board_cost=0,wakeupcall_cost=0,discount=0;//used to calculate the cost of each service
 
     //calculate the cost of the rooms used
     for(i=0;i<6;i++){
-        //if the room number is > 1
+
+        // if there are people staying in room
         if(guest.stayed_rooms[i][1]>0)
-            room_cost += room_arr[i][2];
+            room_cost += (guest.stayed_rooms[i][1]*len_stay*room_arr[i][2]);
     }
 
 
@@ -95,16 +95,8 @@ int checkout(){
         //calculates if booker is over 65
         if (year - dob_year > 65) {
             //if over 65 room rate is 10%less
-            discount = discount + room_cost * 0.1;
+            discount += room_cost * 0.1;
             room_cost *= 0.9;
-        } else if (year - dob_year == 65) {
-            if (dob_month <= month) {
-                if (dob_date <= date) {
-                    //if over 65 room rate is 10%less
-                    discount = discount + room_cost * 0.1;
-                    room_cost *= 0.9;
-                }
-            }
         }
         if(dob_year>year || dob_year == year && dob_month>=month && dob_date>date){
             printf("Date of birth entered is greater than today's date :(\n");
@@ -131,14 +123,14 @@ int checkout(){
 
     //daily wakeup calls?
     //1 = true
-    if(guest.wake_up==1){
+    if(guest.wake_up){
         wakeupcall_cost += 5;
     }
 
 
 
     //calculate total cost
-    total_cost = (room_cost + board_cost + wakeupcall_cost) - discount;
+    total_cost = room_cost + board_cost + wakeupcall_cost;
 
     //print bill
     printf("\n\n\n\n\n\n\n\n\n\nBooking ID: %s\nCOSTS:\nRoom Cost:      %.2fGBP\nBoard Cost:      %.2fGBP\n",input_bookingID,room_cost,board_cost);
