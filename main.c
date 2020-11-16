@@ -25,7 +25,7 @@ int main(){
                 if(check_in()) printf("\nSomething went wrong :(\n");
                 break;
             case '2':
-                if(book_table()) printf("\nSomething went wrong :(\n");
+                book_table();
                 break;
             case '3':
                 if(checkout()) printf("\nSomething went wrong :(\n");

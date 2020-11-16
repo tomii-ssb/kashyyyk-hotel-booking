@@ -12,7 +12,7 @@ int booking();
 //table that the user books
 Table booked_table;
 
-int i = 0, q = 0, num = 0, x = 0;
+int i = 0, num = 0;
 
 //the array which stores the tables
 Table tables_arr[6];
@@ -38,10 +38,13 @@ void init_tables(){
 }
 
 int book_table() {
+
+    int q = 0;
+
     //variable which corresponds to the users bookingID and other details
     Party guest;
 
-    char restaurantID[8], ID;
+    char restaurantID[8];
 
     while (q == 0) //easy way to end code and return to start
     {
@@ -98,7 +101,7 @@ int general_booking(Party guest) {
                 }
                 if (p == 6) {
                     printf("There are no more available tables. Please try another day.\n");
-                    q++;
+                    return 0;
                 }
                 printf("Which table? For the first table and time, type '1', "
                        "the second table and time, type '2', etc.");
@@ -127,8 +130,6 @@ int general_booking(Party guest) {
 
 
 int booking() {
-
-    q = 0;
 
     if (booked_table.booked) //checks if table is already booked and breaks without booking if so
     {
