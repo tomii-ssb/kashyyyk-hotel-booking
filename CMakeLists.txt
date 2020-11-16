@@ -25,3 +25,4 @@ add_executable(Reading_Week check_in.c
         ${SOURCE_FILES}
         ${CMAKE_CURRENT_SOURCE_DIR}/rc/icon.rc
 )
+set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "Kashyyyk Hotel Booker")

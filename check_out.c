@@ -17,7 +17,8 @@ int checkout(){
 
     //enter booking id and validate it
     while(1){
-        printf("enter your booking ID\n");
+        printf("Please enter your booking ID "
+               "(If you haven't yet booked, please enter q to quit ^_^):\n");
         fflush(stdin);
         scanf("%s",input_bookingID);//had problems with gets
         for (i = 0; i < 6; i++) {
@@ -28,6 +29,9 @@ int checkout(){
                 guest_index = i;
                 q++;
                 break;
+            }else if(!strcmp(input_bookingID, "q")){
+                printf("Quit successfully\n");
+                return 0;
             }
 
         }
