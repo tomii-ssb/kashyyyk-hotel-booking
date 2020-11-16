@@ -185,9 +185,15 @@ int book(int a_num, int c_num, int ln, int wake_up, const char *id, char brd){
 
                 room_to_stay = (atoi(&room_to_stay_c) - 1);
 
+                if (room_arr[room_to_stay][0]){
+                    printf("\nRoom is already booked :/\n");
+                    book(a_num, c_num, ln, wake_up, id, brd);
+                }
+
                 room_capacity = room_arr[room_to_stay][1];
 
                 printf("How many people will be staying in this room?\n");
+                fflush(stdin);
                 if (scanf("%d", &staying_number)){}
                 else return 1;
 
