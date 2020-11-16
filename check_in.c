@@ -174,6 +174,7 @@ int book(int a_num, int c_num, int ln, int wake_up, const char *id, char brd){
                 printf("Please enter the number of the room you would like to book (one at a time):\n");
                 fflush(stdin);
                 room_to_stay_c = getchar();
+
                 room_to_stay = (atoi(&room_to_stay_c) - 1);
 
                 room_capacity = room_arr[room_to_stay][1];
