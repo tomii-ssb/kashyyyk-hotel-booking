@@ -22,16 +22,14 @@ int checkout(){
         scanf("%s",input_bookingID);//had problems with gets
         for (i = 0; i < 6; i++) {
 
-            printf("\ncurrent booking id: %s\n", parties_arr[i].booking_id);
-
             // If strcmp returns 0 (strings are identical)
             if (!strcmp(input_bookingID, parties_arr[i].booking_id)) {
-                printf("it was actually found");
                 guest = parties_arr[i];
                 guest_index = i;
                 q++;
                 break;
             }
+
         }
 
         if (q > 0) break;
@@ -130,7 +128,11 @@ int checkout(){
 
     //clears all data stored about this guest
     Party empty_guest;
+    for(int i=0; i < strlen(empty_guest.booking_id);i++){
+        empty_guest.booking_id[i] = ' ';
+    }
     parties_arr[guest_index] = empty_guest;
+
 
     printf("Thank you for staying with us ^_^\n");
     return 0;

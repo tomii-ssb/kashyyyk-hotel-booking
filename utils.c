@@ -3,6 +3,15 @@
 #include<string.h>
 #include "common.h"
 
+void welcome(){
+
+    // Tried to have it in txt, read from it and output, didn't work
+    printf("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n");
+    printf("- - - W E L C O M E   T O   T H E   K A S H Y Y Y K   H O T E L - - -\n");
+    printf("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n");
+
+}
+
 int find_age(Date dob, Date date){
 
     // Days of every month

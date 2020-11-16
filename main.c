@@ -4,6 +4,8 @@
 
 int main(){
 
+    welcome();
+
     // Initialise rooms array
     init_arr();
 
