@@ -45,7 +45,8 @@ int book_table() {
 
     while (q == 0) //easy way to end code and return to start
     {
-        printf("Please enter booking ID:\n");
+        printf("Please enter booking ID "
+               "(If you haven't yet booked, please enter q to quit ^_^):\n");
         scanf("%s", restaurantID);
 
         for (i = 0; i < 6; i++)
@@ -57,6 +58,9 @@ int book_table() {
                 general_booking(guest); //subroutine
                 q++;
                 break;
+            }else if(!strcmp(restaurantID, "q")){
+                printf("Quit successfully\n");
+                return 0;
             }
         }
 
