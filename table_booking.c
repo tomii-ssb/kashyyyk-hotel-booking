@@ -75,7 +75,6 @@ int general_booking(Party guest) {
 
     int p = 0;
     int total_staying = guest.a_num + guest.c_num;
-    printf("\ntotal: %d\n", total_staying);
 
     while (1) {
         if (guest.brd == 'b') { //checks that the user isn't staying for B&B
