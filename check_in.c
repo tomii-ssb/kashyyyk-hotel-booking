@@ -175,6 +175,8 @@ int book(int a_num, int c_num, int ln, int wake_up, const char *id, char brd){
                 fflush(stdin);
                 room_to_stay_c = getchar();
 
+                if (room_to_stay_c == 'q') return 2;
+
                 room_to_stay = (atoi(&room_to_stay_c) - 1);
 
                 room_capacity = room_arr[room_to_stay][1];
@@ -183,10 +185,16 @@ int book(int a_num, int c_num, int ln, int wake_up, const char *id, char brd){
                 if (scanf("%d", &staying_number)){}
                 else return 1;
 
+                if (staying_number > total){
+                    printf("You have only made a booking for %d people :/\n", total);
+                    printf("Please try again or enter 'q' to exit :)\n")
+                    i--;
+                }
+
                 if (staying_number <= room_capacity){
                     needed_rooms[i][1] = staying_number;
                     booked_people -= staying_number;
-                }else{
+                }else if staying_number > room_capacity{
                     printf("Room %d's capacity is %d! Please try again :)", room_to_stay, room_capacity);
                     i--;
                 }
