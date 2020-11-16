@@ -137,6 +137,7 @@ int book(int a_num, int c_num, int ln, int wake_up, const char *id, char brd){
     // var
     int total = a_num + c_num; // Total people staying
     int current_capacity = 18 - room_arr[6][0]; // max capacity - current guests
+    char needed_room_num_c = ' ';
     int needed_room_num = 0;
     int needed_rooms[6][2];
     int booked_people = total;
@@ -160,7 +161,12 @@ int book(int a_num, int c_num, int ln, int wake_up, const char *id, char brd){
 
         printf("How many rooms will you need?\n");
         fflush(stdin);
-        if(!scanf("%d", &needed_room_num)) return 1;
+        needed_room_num_c = getchar();
+
+        if(needed_room_num_c == 'q') return 2;
+
+        needed_room_num = atoi(&needed_room_num_c);
+        if(!needed_room_num) return 1; // If 0 is returned, meaning wasn't a valid integer
 
         if(0 < needed_room_num < available_rooms){
             for(int i=0;i<needed_room_num;i++) {
@@ -186,15 +192,15 @@ int book(int a_num, int c_num, int ln, int wake_up, const char *id, char brd){
                 else return 1;
 
                 if (staying_number > total){
-                    printf("You have only made a booking for %d people :/\n", total);
-                    printf("Please try again or enter 'q' to exit :)\n")
-                    i--;
+                    printf("You have only made a booking for %d person/people :/\n", total);
+                    printf("Please try again or enter 'q' to exit :)\n");
+                    book(a_num, c_num, ln, wake_up, id, brd);
                 }
 
                 if (staying_number <= room_capacity){
-                    needed_rooms[i][1] = staying_number;
+                    needed_rooms[room_to_stay][1] = staying_number;
                     booked_people -= staying_number;
-                }else if staying_number > room_capacity{
+                }else if (staying_number > room_capacity){
                     printf("Room %d's capacity is %d! Please try again :)", room_to_stay, room_capacity);
                     i--;
                 }
