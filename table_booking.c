@@ -74,7 +74,8 @@ int book_table() {
 int general_booking(Party guest) {
 
     int p = 0;
-    int total_staying = guest.a_num = guest.c_num;
+    int total_staying = guest.a_num + guest.c_num;
+    printf("\ntotal: %d\n", total_staying);
 
     while (1) {
         if (guest.brd == 'b') { //checks that the user isn't staying for B&B
@@ -83,7 +84,7 @@ int general_booking(Party guest) {
         } else {
             if (total_staying > 4 || total_staying <= 0 ){ //checks that there aren't more than 4 people or less than 0 people
                 printf("I'm afraid that due to the number of people you have, you cannot book a table.");
-                q++;
+                return 1;
             } else{
 
                 printf("The available tables and their times are:\n"); //for loop outputs all the table names (excluding ones that are already booked, which outputs "BOOKED" in its place)
@@ -113,7 +114,6 @@ int general_booking(Party guest) {
                         booked_table = tables_arr[num-1];
                         if (booking()) return 1;
                         else return 0;
-                        break;
                     default:
                         printf("Not valid\n");
                 }
