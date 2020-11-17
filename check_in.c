@@ -25,7 +25,7 @@ void generate_booking_id(char *id, const char *sur){
     strcat(id, rand_num_str);
 }
 
-void get_usr_info(char *sur, char* brd, int* ln, int* c_num, int* a_num, int* wakeup){
+int get_usr_info(char *sur, char* brd, int* ln, int* c_num, int* a_num, int* wakeup){
 
     // While loop conditions
     int j = 0;
@@ -119,13 +119,24 @@ void get_usr_info(char *sur, char* brd, int* ln, int* c_num, int* a_num, int* wa
     printf("Surname: %s\nDOB: %s\nAdults: %d\nChildren: %d\nWake Up Call?: %c\n",
            sur, dob, *a_num, *c_num, wakeup_inp);
 
-    fflush(stdin);
-    user_conf = getchar();
-    switch(user_conf){
-        case 'y': break;
-        case 'n':
-            printf("Ok, let's do it again!!\n")
+    while(!x){
+        fflush(stdin);
+        user_conf = getchar();
+        switch(user_conf){
+            case 'y': x++; break;
+            case 'n':
+                printf("Ok, let's do it again!!\n");
+                get_usr_info(sur, brd, ln, c_num, a_num, wakeup);
+                x++;
+                break;
+            case 'q': return 2;
+            default:
+                printf("That is not a valid option :/\n");
+                break;
+        }
     }
+
+    return 0;
 
 }
 
@@ -163,6 +174,9 @@ int book(int a_num, int c_num, int ln, int wake_up, const char *id, char brd){
     // Init needed_rooms
     for(int i=0;i<6;i++) needed_rooms[i][1] = 0;
 
+    // Loop var
+    int i = 0;
+
     if(total>current_capacity){
         printf("We do not currently have the capacity for your party :(((\n");
         return 1;
@@ -186,7 +200,7 @@ int book(int a_num, int c_num, int ln, int wake_up, const char *id, char brd){
         if(!needed_room_num) return 1; // If 0 is returned, meaning wasn't a valid integer
 
         if(0 < needed_room_num < available_rooms){
-            for(int i=0;i<needed_room_num;i++) {
+            while(i < needed_room_num) {
 
                 char room_to_stay_c = ' ';
                 int room_to_stay = 0;
@@ -202,9 +216,15 @@ int book(int a_num, int c_num, int ln, int wake_up, const char *id, char brd){
 
                 room_to_stay = (atoi(&room_to_stay_c) - 1);
 
+                if (room_to_stay <= 6){
+                    printf("\nThat is not a valid room :/\n");
+                    return 1;
+                }
+
+
                 if (room_arr[room_to_stay][0]){
                     printf("\nRoom is already booked :/\n");
-                    book(a_num, c_num, ln, wake_up, id, brd);
+                    return 1;
                 }
 
                 room_capacity = room_arr[room_to_stay][1];
@@ -223,9 +243,9 @@ int book(int a_num, int c_num, int ln, int wake_up, const char *id, char brd){
                 if (staying_number <= room_capacity){
                     needed_rooms[room_to_stay][1] = staying_number;
                     booked_people -= staying_number;
+                    i++;
                 }else if (staying_number > room_capacity){
                     printf("Room %d's capacity is %d! Please try again :)", room_to_stay, room_capacity);
-                    i--;
                 }
             }
 
@@ -290,7 +310,12 @@ int check_in (){
     int ln = 0; // Length of stay (in full days)
     char booking_id[50];
 
-    get_usr_info(usr_surname, &brd, &ln, &child_num, &adult_num, &wakeup_call);
+    switch(get_usr_info(usr_surname, &brd, &ln, &child_num, &adult_num, &wakeup_call)){
+        case 1: return 1;
+        case 2:
+            printf("\nQuit successfully\n");
+            return 2;
+    };
 
     generate_booking_id(booking_id, usr_surname);
 
