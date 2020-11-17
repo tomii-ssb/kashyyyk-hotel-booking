@@ -30,6 +30,10 @@ void get_usr_info(char *sur, char* brd, int* ln, int* c_num, int* a_num, int* wa
     // While loop conditions
     int j = 0;
     int k = 0;
+    int x = 0;
+
+    // Confirmation from the user, y/n
+    char user_conf = ' ';
 
     // Will store 'y' or 'n', depending on whether user wants a daily wake-up call or not
     char wakeup_inp = ' ';
@@ -110,6 +114,19 @@ void get_usr_info(char *sur, char* brd, int* ln, int* c_num, int* a_num, int* wa
                 break;
         }
     }
+
+    printf("\nIs this correct? (y for yes, n for no, q for quit)\n");
+    printf("Surname: %s\nDOB: %s\nAdults: %d\nChildren: %d\nWake Up Call?: %c\n",
+           sur, dob, *a_num, *c_num, wakeup_inp);
+
+    fflush(stdin);
+    user_conf = getchar();
+    switch(user_conf){
+        case 'y': break;
+        case 'n':
+            printf("Ok, let's do it again!!\n")
+    }
+
 }
 
 int add_party_to_array(Party booked_party){
@@ -147,7 +164,7 @@ int book(int a_num, int c_num, int ln, int wake_up, const char *id, char brd){
     for(int i=0;i<6;i++) needed_rooms[i][1] = 0;
 
     if(total>current_capacity){
-        printf("We do not currently have the capacity for your party :(((");
+        printf("We do not currently have the capacity for your party :(((\n");
         return 1;
     }
 
