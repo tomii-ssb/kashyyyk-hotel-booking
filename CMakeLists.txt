@@ -21,7 +21,7 @@ add_executable(Reading_Week check_in.c
         table_booking.c
         utils.c
         types.h
-        //${GUI_TYPE}
+        ${GUI_TYPE}
         ${SOURCE_FILES}
         ${CMAKE_CURRENT_SOURCE_DIR}/rc/icon.rc
 )
