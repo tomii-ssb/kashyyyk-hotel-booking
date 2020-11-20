@@ -41,9 +41,14 @@ int get_usr_info(char *sur, char* brd, int* ln, int* c_num, int* a_num, int* wak
     printf("Please enter your surname (in lowercase):\n");
     fflush(stdin);
     if (scanf("%s", sur)){}
-    else{
-        printf("\nAn error occurred, please try again :/\n");
-        get_usr_info(sur, brd, ln, c_num, a_num, wakeup);
+    else return 1;
+
+    // Check for integers in surname
+    for (int i=0;i<strlen(sur);i++){
+        if(atoi(&sur[i])){
+            printf("\nYou cannot have integers in your surname :/\n")
+            return 1;
+        }
     }
 
     printf("Please enter your date of birth (format DDMMYYYY):\n");
@@ -56,27 +61,15 @@ int get_usr_info(char *sur, char* brd, int* ln, int* c_num, int* a_num, int* wak
 
     printf("How many adults will be staying?\n");
     fflush(stdin);
-    if(scanf("%d", a_num)){}
-    else{
-        printf("\nAn error occurred, please try again :/\n");
-        get_usr_info(sur, brd, ln, c_num, a_num, wakeup);
-    }
+    if(!scanf("%d", a_num)) return 1;
 
     printf("How many children will be staying? (If none, please enter 0)\n");
     fflush(stdin);
-    if(scanf("%d", c_num)){}
-    else{
-        printf("\nAn error occurred, please try again :/\n");
-        get_usr_info(sur, brd, ln, c_num, a_num, wakeup);
-    }
+    if(!scanf("%d", c_num)) return 1;
 
     printf("How long will you be staying? (In full days)\n");
     fflush(stdin);
-    if(scanf("%d", ln)){}
-    else{
-        printf("\nAn error occurred, please try again :/\n");
-        get_usr_info(sur, brd, ln, c_num, a_num, wakeup);
-    }
+    if(!scanf("%d", ln)) return 1;
 
     while(!j) {
         printf("Please enter F for full board, H for half board, or B for bed & breakfast:\n");
@@ -100,11 +93,7 @@ int get_usr_info(char *sur, char* brd, int* ln, int* c_num, int* a_num, int* wak
     while(!k) {
         printf("Would you like a daily wake-up call? (y for yes, n for no)\n");
         fflush(stdin);
-        if(scanf("%c", &wakeup_inp)){}
-        else{
-            printf("\nAn error occurred, please try again :/\n");
-            get_usr_info(sur, brd, ln, c_num, a_num, wakeup);
-        }
+        if(!scanf("%c", &wakeup_inp)) return 1;
 
         switch(wakeup_inp){
             case 'y': *wakeup = 1, k++; break;
