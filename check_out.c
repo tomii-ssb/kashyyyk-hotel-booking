@@ -128,11 +128,14 @@ int checkout(){
     }
     printf("Total Cost:     %.2fGBP\n\n",total_cost);
 
-
+    // Free up rooms
+    for (int j = 0; j < 6; j++){
+        if (guest.stayed_rooms[i][1]) room_arr[i][0] = 0;
+    }
 
     //clears all data stored about this guest
     Party empty_guest;
-    for(int i=0; i < strlen(empty_guest.booking_id);i++){
+    for(int j=0; j < strlen(empty_guest.booking_id);j++){
         empty_guest.booking_id[i] = ' ';
     }
     parties_arr[guest_index] = empty_guest;
