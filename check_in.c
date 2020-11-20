@@ -181,6 +181,11 @@ int book(int a_num, int c_num, int ln, int wake_up, const char *id, char brd){
         printf("We do not currently have the capacity for your party :(((\n");
         return 1;
     }
+    //does not accept a party of less than 1 guest
+    else if(total<1){
+        printf("We do not accept parties of less than 1 person\n");
+        return 1;
+    }
 
     // DOB must be in DDMMYYYY format
     if (strlen(dob) != 8) return 1;
@@ -216,7 +221,7 @@ int book(int a_num, int c_num, int ln, int wake_up, const char *id, char brd){
 
                 room_to_stay = (atoi(&room_to_stay_c) - 1);
 
-                if (room_to_stay <= 6){
+                if (room_to_stay >= 6){
                     printf("\nThat is not a valid room :/\n");
                     return 1;
                 }
