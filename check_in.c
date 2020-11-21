@@ -40,8 +40,7 @@ int get_usr_info(char *sur, char* brd, int* ln, int* c_num, int* a_num, int* wak
 
     printf("Please enter your surname (in lowercase):\n");
     fflush(stdin);
-    if (scanf("%s", sur)){}
-    else return 1;
+    if (!scanf("%s", sur)) return 1;
 
     // Check for integers in surname
     for (int i=0;i<strlen(sur);i++){
@@ -53,11 +52,7 @@ int get_usr_info(char *sur, char* brd, int* ln, int* c_num, int* a_num, int* wak
 
     printf("Please enter your date of birth (format DDMMYYYY):\n");
     fflush(stdin);
-    if(scanf("%s", dob)){}
-    else{
-        printf("\nAn error occurred, please try again :/\n");
-        get_usr_info(sur, brd, ln, c_num, a_num, wakeup);
-    }
+    if(!scanf("%s", dob)) return 1;
 
     printf("How many adults will be staying?\n");
     fflush(stdin);
