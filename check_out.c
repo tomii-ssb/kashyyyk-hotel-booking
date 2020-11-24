@@ -130,7 +130,6 @@ int checkout(){
 
     // Free up rooms
     for (int j = 0; j < 6; j++){
-        printf("\nnumber stayed %d\n", guest.stayed_rooms[i][1]);
         if (guest.stayed_rooms[j][1] > 0) room_arr[j][0] = 0;
     }
 
