@@ -8,8 +8,6 @@ char *bookingid_arr[6];
 Party parties_arr[6];
 Table tables_arr[6];
 
-
-
 // -- FUNCTIONS -- //
 
 // utils
@@ -18,6 +16,7 @@ int dob_int(char* dob);
 Date str_to_date(char *date_c);
 int compare_dates(Date d1, Date d2);
 int find_age(Date dob, Date date);
+int verify_date(Date date);
 
 // check in
 int check_in();
