@@ -189,7 +189,7 @@ int book(int a_num, int c_num, int ln, int wake_up, const char *id, char brd){
         needed_room_num = atoi(&needed_room_num_c);
         if(!needed_room_num) return 1; // If 0 is returned, meaning wasn't a valid integer
 
-        if(0 < needed_room_num < available_rooms){
+        if(0 < needed_room_num <= available_rooms){
             while(i < needed_room_num) {
 
                 char room_to_stay_c = ' ';
