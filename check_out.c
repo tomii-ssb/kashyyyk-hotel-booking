@@ -131,13 +131,13 @@ int checkout(){
     // Free up rooms
     for (int j = 0; j < 6; j++){
         printf("\nnumber stayed %d\n", guest.stayed_rooms[i][1]);
-        if (guest.stayed_rooms[i][1]) room_arr[i][0] = 0;
+        if (guest.stayed_rooms[j][1] > 0) room_arr[j][0] = 0;
     }
 
     //clears all data stored about this guest
     Party empty_guest;
     for(int j=0; j < strlen(empty_guest.booking_id);j++){
-        empty_guest.booking_id[i] = ' ';
+        empty_guest.booking_id[j] = ' ';
     }
     parties_arr[guest_index] = empty_guest;
 
