@@ -45,7 +45,7 @@ int get_usr_info(char *sur, char* brd, int* ln, int* c_num, int* a_num, int* wak
     // Check for integers in surname
     for (int i=0;i<strlen(sur);i++){
         if(atoi(&sur[i])){
-            printf("\nYou cannot have integers in your surname :/\n")
+            printf("\nYou cannot have integers in your surname :/\n");
             return 1;
         }
     }
