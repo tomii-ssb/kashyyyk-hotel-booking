@@ -35,6 +35,22 @@ int find_age(Date dob, Date date){
     return calculated_year;
 }
 
+int verify_date(Date date){
+    int month[] = { 31, 28, 31, 30, 31, 30, 31,
+                    31, 30, 31, 30, 31 };
+
+    int month_days = month[date.month - 1];
+    if(0 < date.day <= month_days);
+    else return 1;
+
+    if(date.year > 2030) return 1;
+
+    if (date.month > 12 || date.month <= 0)
+        return 1;
+
+    return 0;
+}
+
 Date str_to_date(char *date_c){
 
     // Date to be returned
