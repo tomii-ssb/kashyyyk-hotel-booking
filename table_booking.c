@@ -88,12 +88,12 @@ int general_booking(Party guest) {
                 printf("I'm afraid that due to the number of people you have, you cannot book a table.");
                 return 1;
             } else{
-
                 printf("The available tables and their times are:\n"); //for loop outputs all the table names (excluding ones that are already booked, which outputs "BOOKED" in its place)
                 for (i = 0; i < 6; i++) {
                     Table current_table = tables_arr[i];
 
-                    printf("%d. %s at %s\n", i+1, current_table.name, current_table.time);
+                    if(!tables_arr[i].booked)
+                        printf("%d. %s at %s\n", i+1, current_table.name, current_table.time);
 
                     if (current_table.booked) {
                         p++; //use this to potentially end this code early in case all tables are booked
