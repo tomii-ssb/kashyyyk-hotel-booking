@@ -160,7 +160,7 @@ int book(int a_num, int c_num, int ln, int wake_up, const char *id, char brd){
     for(int i=0;i<6;i++) needed_rooms[i][1] = 0;
 
     // Loop var
-    int i = 0;
+    int k = 0;
 
     if(total>current_capacity){
         printf("We do not currently have the capacity for your party :(((\n");
@@ -190,7 +190,7 @@ int book(int a_num, int c_num, int ln, int wake_up, const char *id, char brd){
         if(!needed_room_num) return 1; // If 0 is returned, meaning wasn't a valid integer
 
         if(0 < needed_room_num <= available_rooms){
-            while(i < needed_room_num) {
+            while(k < needed_room_num) {
 
                 char room_to_stay_c = ' ';
                 int room_to_stay = 0;
@@ -226,14 +226,14 @@ int book(int a_num, int c_num, int ln, int wake_up, const char *id, char brd){
 
                 if (staying_number > total){
                     printf("You have only made a booking for %d person/people :/\n", total);
-                    printf("Please try again or enter 'q' to exit :)\n");
-                    book(a_num, c_num, ln, wake_up, id, brd);
+                    return 1;
                 }
 
                 if (staying_number <= room_capacity){
+                    printf("\npeople staying in room %d: %d\n", room_to_stay, staying_number);
                     needed_rooms[room_to_stay][1] = staying_number;
                     booked_people -= staying_number;
-                    i++;
+                    k++;
                 }else if (staying_number > room_capacity){
                     printf("Room %d's capacity is %d! Please try again :)", room_to_stay, room_capacity);
                 }
