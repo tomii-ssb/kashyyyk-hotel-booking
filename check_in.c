@@ -229,12 +229,14 @@ int book(int a_num, int c_num, int ln, int wake_up, const char *id, char brd){
                     return 1;
                 }
 
-                if (staying_number <= room_capacity){
+                if (staying_number <= room_capacity && staying_number>0){
                     needed_rooms[room_to_stay][1] = staying_number;
                     booked_people -= staying_number;
                     k++;
                 }else if (staying_number > room_capacity){
-                    printf("Room %d's capacity is %d! Please try again :)", room_to_stay, room_capacity);
+                    printf("Room %d's capacity is %d! Please try again :)\n", room_to_stay, room_capacity);
+                }else if (staying_number<=0){
+                    printf("You cannot book less than 1 person into a room! Please try again! If you would like to quit, press q\n");
                 }
             }
 
