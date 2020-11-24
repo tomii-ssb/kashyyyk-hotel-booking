@@ -206,7 +206,7 @@ int book(int a_num, int c_num, int ln, int wake_up, const char *id, char brd){
 
                 room_to_stay = (atoi(&room_to_stay_c) - 1);
 
-                if (room_to_stay >= 6){
+                if (room_to_stay > 5){
                     printf("\nThat is not a valid room :/\n");
                     return 1;
                 }
