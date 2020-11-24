@@ -230,7 +230,6 @@ int book(int a_num, int c_num, int ln, int wake_up, const char *id, char brd){
                 }
 
                 if (staying_number <= room_capacity){
-                    printf("\npeople staying in room %d: %d\n", room_to_stay, staying_number);
                     needed_rooms[room_to_stay][1] = staying_number;
                     booked_people -= staying_number;
                     k++;
