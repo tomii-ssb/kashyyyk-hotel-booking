@@ -57,7 +57,7 @@ int get_usr_info(char *sur, char* brd, int* ln, int* c_num, int* a_num, int* wak
 
     // Check for chars in DOB
     for (int i=0;i<strlen(dob);i++){
-        if(!atoi(dob)){
+        if(!atoi(&dob[i])){
             printf("\nYou cannot have characters in your DOB :/\n");
             return 1;
         }
