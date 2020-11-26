@@ -55,6 +55,14 @@ int get_usr_info(char *sur, char* brd, int* ln, int* c_num, int* a_num, int* wak
     fflush(stdin);
     if(!scanf("%s", dob)) return 1;
 
+    // Check for chars in DOB
+    for (int i=0;i<strlen(dob);i++){
+        if(!atoi(&dob[i])){
+            printf("\nYou cannot have characters in your DOB :/\n");
+            return 1;
+        }
+    }
+
     printf("How many adults will be staying?\n");
     fflush(stdin);
     if(!scanf("%d", a_num)) return 1;
