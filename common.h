@@ -17,6 +17,7 @@ Date str_to_date(char *date_c);
 int compare_dates(Date d1, Date d2);
 int find_age(Date dob, Date date);
 int verify_date(Date date);
+void lower(char* sur);
 
 // check in
 int check_in();
