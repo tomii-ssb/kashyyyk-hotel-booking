@@ -135,9 +135,10 @@ int checkout(){
 
     //clears all data stored about this guest
     Party empty_guest;
-    for(int j=0; j < strlen(empty_guest.booking_id);j++){
-        empty_guest.booking_id[j] = ' ';
-    }
+    int id_len = strlen(empty_guest.booking_id);
+
+    for(int j=0;j<id_len;j++) empty_guest.booking_id[j] = ' ';
+
     parties_arr[guest_index] = empty_guest;
 
 
