@@ -165,7 +165,7 @@ int book(int a_num, int c_num, int ln, int wake_up, const char *id, char brd){
     int booked_people = total;
     int available_rooms = 0;
 
-    // Init needed_rooms
+    // Populate needed_rooms
     for(int i=0;i<6;i++) needed_rooms[i][1] = 0;
 
     // Loop var
