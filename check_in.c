@@ -39,9 +39,10 @@ int get_usr_info(char *sur, char* brd, int* ln, int* c_num, int* a_num, int* wak
     // Will store 'y' or 'n', depending on whether user wants a daily wake-up call or not
     char wakeup_inp = ' ';
 
-    printf("Please enter your surname (in lowercase):\n");
+    printf("Please enter your surname:\n");
     fflush(stdin);
     if (!scanf("%s", sur)) return 1;
+    lower(sur);
 
     // Check for integers in surname
     for (int i=0;i<strlen(sur);i++){
