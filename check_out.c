@@ -56,7 +56,7 @@ int checkout(){
 
         // if there are people staying in room
         if(guest.stayed_rooms[i][1]>0)
-            room_cost += room_arr[i][2]*guest.stayed_rooms[i][1]*len_stay;
+            room_cost += room_arr[i][2]*len_stay;
     }
 
 
