@@ -9,6 +9,8 @@ int general_booking();
 //the specific procedure which "books" a table (edits an element in the table array)
 int booking();
 
+// Index for table the user is booking in table arr
+int tab_arr_i = 0;
 //table that the user books
 Table booked_table;
 
@@ -91,13 +93,10 @@ int general_booking(Party guest) {
                 printf("The available tables and their times are:\n"); //for loop outputs all the table names (excluding ones that are already booked, which outputs "BOOKED" in its place)
                 for (i = 0; i < 6; i++) {
                     Table current_table = tables_arr[i];
-
-                    if(!tables_arr[i].booked)
+                    if(current_table.booked == 0){
+                        if(i == 0) printf("\ndisplayed tab 1\n");
                         printf("%d. %s at %s\n", i+1, current_table.name, current_table.time);
-
-                    if (current_table.booked) {
-                        p++; //use this to potentially end this code early in case all tables are booked
-                    }
+                    }else p++; //use this to potentially end this code early in case all tables are booked
                 }
                 if (p == 6) {
                     printf("There are no more available tables. Please try another day.\n");
@@ -106,6 +105,7 @@ int general_booking(Party guest) {
                 printf("Which table? For the first table and time, type '1', "
                        "the second table and time, type '2', etc.");
                 scanf("%d", &num);
+                tab_arr_i = num - 1;
                 switch (num) {
                     case 1:
                     case 2:
@@ -136,7 +136,7 @@ int booking() {
         printf("Table already booked.");
         return 1;
     } else {
-        booked_table.booked = 1; //changes elements name to "BOOKED" so that it cannot be booked again until the program is rebooted
+        tables_arr[tab_arr_i].booked = 1; //changes elements name to "BOOKED" so that it cannot be booked again until the program is rebooted
 
         printf("\nYou have successfully booked the %s table at %s :)\n", booked_table.name, booked_table.time);
     }
