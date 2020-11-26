@@ -94,7 +94,6 @@ int general_booking(Party guest) {
                 for (i = 0; i < 6; i++) {
                     Table current_table = tables_arr[i];
                     if(current_table.booked == 0){
-                        if(i == 0) printf("\ndisplayed tab 1\n");
                         printf("%d. %s at %s\n", i+1, current_table.name, current_table.time);
                     }else p++; //use this to potentially end this code early in case all tables are booked
                 }
