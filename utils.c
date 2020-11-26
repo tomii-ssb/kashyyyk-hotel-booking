@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include<ctype.h>
 #include "common.h"
 
 void welcome(){
@@ -10,6 +11,10 @@ void welcome(){
     printf("- - - W E L C O M E   T O   T H E   K A S H Y Y Y K   H O T E L - - -\n");
     printf("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n");
 
+}
+
+void lower(char* str){
+    for ( ; *str; ++str) *str = tolower(*str);
 }
 
 int find_age(Date dob, Date date){
