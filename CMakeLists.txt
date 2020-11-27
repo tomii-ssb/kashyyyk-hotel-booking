@@ -21,8 +21,8 @@ add_executable(Reading_Week check_in.c
         table_booking.c
         utils.c
         types.h
-        ${GUI_TYPE}
-        ${SOURCE_FILES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/rc/icon.rc
+        #${GUI_TYPE}
+        #${SOURCE_FILES}
+        #${CMAKE_CURRENT_SOURCE_DIR}/rc/icon.rc
 )
 set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "Kashyyyk Hotel Booker")
